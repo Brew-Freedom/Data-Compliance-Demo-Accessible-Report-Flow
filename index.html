@@ -1,27 +1,41 @@
-<div class="options">
-  <label class="option">
-    <input type="radio" name="issue">
-    <span>Licensing or usage rights unclear</span>
-  </label>
+<section id="step1">
+  <div class="card">
+    <div class="step-meta">
+      <span>Step 1 of 2</span>
+      <div class="progress">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
 
-  <label class="option">
-    <input type="radio" name="issue">
-    <span>Contains personal or sensitive data</span>
-  </label>
+    <h1>What kind of issue are you reporting?</h1>
 
-  <label class="option">
-    <input type="radio" name="issue">
-    <span>Source cannot be verified</span>
-  </label>
+    <div class="options">
+      <label class="option">
+        <input type="radio" name="issue" value="Licensing unclear" />
+        <span>Licensing or usage rights unclear</span>
+      </label>
 
-  <label class="option">
-    <input type="radio" name="issue">
-    <span>Restricted or copyrighted material</span>
-  </label>
+      <label class="option">
+        <input type="radio" name="issue" value="Sensitive data" />
+        <span>Contains personal or sensitive data</span>
+      </label>
 
-  <label class="option">
-    <input type="radio" name="issue">
-    <span>Not sure — I just want to flag it</span>
-  </label>
-</div>
-<button>Continue →</button>
+      <label class="option">
+        <input type="radio" name="issue" value="Unverified source" />
+        <span>Source cannot be verified</span>
+      </label>
+
+      <label class="option">
+        <input type="radio" name="issue" value="Restricted material" />
+        <span>Restricted or copyrighted material</span>
+      </label>
+
+      <label class="option">
+        <input type="radio" name="issue" value="Not sure" />
+        <span>Not sure — I just want to flag it</span>
+      </label>
+    </div>
+
+    <button onclick="goNext()">Continue →</button>
+  </div>
+</section>
