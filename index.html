@@ -3,286 +3,240 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AI Training Data Compliance – Reporting Flow</title>
+<title>AI Training Data Compliance</title>
 
 <style>
 :root {
-  --bg: #ffffff;
-  --text: #111827;
-  --muted: #6b7280;
-  --primary: #1d4ed8;
-  --border: #d1d5db;
-  --focus: #2563eb;
-  --success: #047857;
-}
-
-[data-contrast="high"] {
-  --bg: #000000;
-  --text: #ffffff;
-  --muted: #d1d5db;
-  --primary: #facc15;
-  --border: #ffffff;
-  --focus: #facc15;
-  --success: #22c55e;
-}
-
-[data-text="large"] {
-  font-size: 18px;
-}
-
-* {
-  box-sizing: border-box;
+  --bg:#ffffff;
+  --text:#111827;
+  --muted:#6b7280;
+  --primary:#1d4ed8;
+  --border:#d1d5db;
+  --focus:#2563eb;
 }
 
 body {
-  margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
 
-.container {
-  max-width: 880px;
-  margin: 40px auto;
-  padding: 24px;
+.app {
+  display:grid;
+  grid-template-columns:240px 1fr;
+  min-height:100vh;
 }
 
-h1, h2 {
-  margin-top: 0;
+/* SIDEBAR */
+nav {
+  border-right:1px solid var(--border);
+  padding:16px;
+  background:#f9fafb;
+}
+nav h2 {
+  font-size:1rem;
+  margin-bottom:12px;
+}
+nav button {
+  width:100%;
+  text-align:left;
+  padding:10px;
+  margin-bottom:6px;
+  background:none;
+  border:1px solid transparent;
+  border-radius:6px;
+  cursor:pointer;
+}
+nav button:hover,
+nav button:focus-visible {
+  border-color:var(--primary);
+  outline:none;
 }
 
-.progress {
-  margin-bottom: 24px;
+/* MAIN */
+main {
+  padding:32px;
 }
 
-.progress-bar {
-  height: 6px;
-  background: var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-}
+.hidden { display:none; }
 
-.progress-bar span {
-  display: block;
-  height: 100%;
-  width: 0%;
-  background: var(--primary);
-  transition: width 0.4s ease;
-}
+h1 { margin-top:0; }
 
 .card {
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 24px;
-}
-
-.dataset {
-  font-size: 0.9rem;
-  background: #f9fafb;
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:16px;
+  margin-bottom:24px;
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 12px;
-  font-size: 0.9rem;
+  width:100%;
+  border-collapse:collapse;
+  font-size:0.9rem;
 }
-
 th, td {
-  border: 1px solid var(--border);
-  padding: 8px;
-  text-align: left;
-}
-
-fieldset {
-  border: none;
-  padding: 0;
+  border:1px solid var(--border);
+  padding:8px;
+  text-align:left;
 }
 
 label.option {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  margin-bottom: 12px;
-  cursor: pointer;
-}
-
-label.option:focus-within,
-button:focus-visible,
-textarea:focus-visible {
-  outline: 4px solid var(--focus);
-  outline-offset: 2px;
-}
-
-button {
-  min-height: 48px;
-  padding: 10px 16px;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-}
-
-.primary {
-  background: var(--primary);
-  color: white;
-}
-
-.secondary {
-  background: transparent;
-  border: 1px solid var(--border);
+  display:flex;
+  gap:12px;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  margin-bottom:12px;
+  cursor:pointer;
 }
 
 .actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
+  display:flex;
+  gap:12px;
 }
 
-.hidden {
-  display: none;
+button.primary {
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:10px 16px;
+  border-radius:6px;
 }
 
-.success {
-  text-align: center;
-  color: var(--success);
-}
-
-.toggle-bar {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
+button.secondary {
+  background:none;
+  border:1px solid var(--border);
+  padding:10px 16px;
+  border-radius:6px;
 }
 </style>
 </head>
 
 <body>
-<div class="container" id="app">
+<div class="app">
 
-  <div class="toggle-bar">
-    <button class="secondary" onclick="toggleContrast()">High Contrast</button>
-    <button class="secondary" onclick="toggleText()">Large Text</button>
+<!-- SIDEBAR -->
+<nav>
+  <h2>Compliance Tool</h2>
+  <button onclick="show('report')">📝 Report issue</button>
+  <button onclick="show('audit')">📜 Audit log</button>
+  <button onclick="show('legal')">⚖️ Legal review queue</button>
+  <button onclick="exportCSV()">⬇️ Export CSV</button>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+<!-- REPORT -->
+<section id="report">
+  <h1>Flag training data issue</h1>
+
+  <div class="card">
+    <strong>Dataset:</strong> customer_uploads_q3.xlsx<br>
+    <strong>Row:</strong> 417
   </div>
 
-  <div class="progress">
-    <div>Step <span id="stepNum">1</span> of 3</div>
-    <div class="progress-bar"><span id="progress"></span></div>
+  <label class="option"><input type="radio" name="issue" value="Licensing unclear"> Licensing unclear</label>
+  <label class="option"><input type="radio" name="issue" value="Personal data"> Personal or sensitive data</label>
+  <label class="option"><input type="radio" name="issue" value="Source unverifiable"> Source unverifiable</label>
+  <label class="option"><input type="radio" name="issue" value="Copyrighted"> Copyrighted material</label>
+
+  <div class="actions">
+    <button class="primary" onclick="submit()">Submit</button>
   </div>
+</section>
 
-  <!-- DATASET CONTEXT -->
-  <div class="card dataset">
-    <strong>Dataset:</strong> customer_uploads_q3.xlsx<br />
-    <strong>Row:</strong> 417 &nbsp; | &nbsp; <strong>Column:</strong> Notes
-    <table aria-label="Excel row preview">
-      <tr><th>Name</th><th>Email</th><th>Notes</th></tr>
-      <tr><td>Jane Smith</td><td>jane@email.com</td><td>“SSN may be included here”</td></tr>
-    </table>
-  </div>
+<!-- AUDIT LOG -->
+<section id="audit" class="hidden">
+  <h1>Audit log</h1>
+  <table>
+    <thead>
+      <tr><th>Time</th><th>Dataset</th><th>Row</th><th>Issue</th><th>Status</th></tr>
+    </thead>
+    <tbody id="auditRows"></tbody>
+  </table>
+</section>
 
-  <!-- STEP 1 -->
-  <section id="step1">
-    <h1>Why might this row be risky for training data?</h1>
-    <fieldset>
-      <label class="option">
-        <input type="radio" name="issue" value="Licensing unclear">
-        Licensing or usage rights unclear
-      </label>
-      <label class="option">
-        <input type="radio" name="issue" value="Personal data">
-        Contains personal or sensitive data
-      </label>
-      <label class="option">
-        <input type="radio" name="issue" value="Source unverifiable">
-        Source cannot be verified
-      </label>
-      <label class="option">
-        <input type="radio" name="issue" value="Copyrighted">
-        Restricted or copyrighted material
-      </label>
-      <label class="option">
-        <input type="radio" name="issue" value="Not sure">
-        Not sure — flag for review
-      </label>
-    </fieldset>
+<!-- LEGAL QUEUE -->
+<section id="legal" class="hidden">
+  <h1>Legal review queue</h1>
+  <table>
+    <thead>
+      <tr><th>Dataset</th><th>Row</th><th>Issue</th><th>Status</th></tr>
+    </thead>
+    <tbody id="legalRows"></tbody>
+  </table>
+</section>
 
-    <div class="actions">
-      <button class="primary" onclick="goStep2()">Continue</button>
-    </div>
-  </section>
-
-  <!-- STEP 2 -->
-  <section id="step2" class="hidden">
-    <h1>Confirm & add context</h1>
-    <p><strong>Selected issue:</strong> <span id="summary"></span></p>
-
-    <label for="notes">Optional context</label>
-    <textarea id="notes" rows="4" style="width:100%"></textarea>
-
-    <div class="actions">
-      <button class="secondary" onclick="back()">Back</button>
-      <button class="primary" onclick="submit()">Submit</button>
-    </div>
-  </section>
-
-  <!-- SUCCESS -->
-  <section id="step3" class="hidden success">
-    <h1>✓ Report submitted</h1>
-    <p>This issue has been logged and linked to row #417.</p>
-    <button class="secondary" onclick="edit()">Edit submission</button>
-    <button class="primary" onclick="reset()">New report</button>
-  </section>
-
+</main>
 </div>
 
 <script>
-const progress = document.getElementById("progress");
-const stepNum = document.getElementById("stepNum");
+let audits = JSON.parse(localStorage.getItem("audits") || "[]");
 
-function goStep2() {
-  const selected = document.querySelector('input[name="issue"]:checked');
-  if (!selected) {
-    alert("Please select an option.");
-    return;
-  }
-  localStorage.setItem("issue", selected.value);
-  document.getElementById("summary").textContent = selected.value;
-  step(2);
+function show(id) {
+  ["report","audit","legal"].forEach(s=>{
+    document.getElementById(s).classList.toggle("hidden", s!==id);
+  });
+  if (id==="audit") renderAudit();
+  if (id==="legal") renderLegal();
 }
 
 function submit() {
-  localStorage.setItem("notes", document.getElementById("notes").value);
-  step(3);
-}
+  const selected = document.querySelector('input[name="issue"]:checked');
+  if (!selected) return alert("Select an issue");
 
-function back() { step(1); }
-function edit() { step(2); }
-
-function reset() {
-  localStorage.clear();
-  step(1);
-}
-
-function step(n) {
-  ["step1","step2","step3"].forEach((id,i)=>{
-    document.getElementById(id).classList.toggle("hidden", i !== n-1);
+  audits.push({
+    time:new Date().toLocaleString(),
+    dataset:"customer_uploads_q3.xlsx",
+    row:417,
+    issue:selected.value,
+    status:"Pending legal review"
   });
-  stepNum.textContent = n;
-  progress.style.width = `${(n-1)/2*100}%`;
+
+  localStorage.setItem("audits", JSON.stringify(audits));
+  alert("Issue logged");
 }
 
-function toggleContrast() {
-  document.body.dataset.contrast =
-    document.body.dataset.contrast === "high" ? "" : "high";
+function renderAudit() {
+  const tbody = document.getElementById("auditRows");
+  tbody.innerHTML="";
+  audits.forEach(a=>{
+    tbody.innerHTML += `<tr>
+      <td>${a.time}</td>
+      <td>${a.dataset}</td>
+      <td>${a.row}</td>
+      <td>${a.issue}</td>
+      <td>${a.status}</td>
+    </tr>`;
+  });
 }
 
-function toggleText() {
-  document.body.dataset.text =
-    document.body.dataset.text === "large" ? "" : "large";
+function renderLegal() {
+  const tbody = document.getElementById("legalRows");
+  tbody.innerHTML="";
+  audits.forEach(a=>{
+    tbody.innerHTML += `<tr>
+      <td>${a.dataset}</td>
+      <td>${a.row}</td>
+      <td>${a.issue}</td>
+      <td>${a.status}</td>
+    </tr>`;
+  });
+}
+
+function exportCSV() {
+  let csv = "Time,Dataset,Row,Issue,Status\n";
+  audits.forEach(a=>{
+    csv += `"${a.time}","${a.dataset}",${a.row},"${a.issue}","${a.status}"\n`;
+  });
+  const blob = new Blob([csv], {type:"text/csv"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "audit_log.csv";
+  a.click();
 }
 </script>
 </body>
