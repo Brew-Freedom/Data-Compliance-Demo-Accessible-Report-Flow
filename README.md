@@ -4,9 +4,11 @@ import { CheckCircle, AlertTriangle, Accessibility } from "lucide-react";
 
 /**
  * Data Compliance Demo App
- * Purpose: Demo a low-cognitive-load, WCAG-aligned flow
+ * Purpose: Low-cognitive-load, WCAG-aligned flow
  * for reporting AI training data risks.
  */
+
+/* ------------------ Constants ------------------ */
 
 const ISSUES = [
   "Licensing or usage rights unclear",
@@ -16,45 +18,61 @@ const ISSUES = [
   "Not sure — I just want to flag it",
 ];
 
+const TEXT_SIZES = {
+  sm: "text-sm",
+  base: "text-base",
+  lg: "text-lg",
+  xl: "text-xl",
+};
+
+/* ------------------ App ------------------ */
+
 export default function App() {
+  /* Core flow state */
   const [step, setStep] = useState(1);
   const [issue, setIssue] = useState("");
   const [context, setContext] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+
+  /* Accessibility state */
   const [showPrefs, setShowPrefs] = useState(false);
   const [prefs, setPrefs] = useState({
-    textSize: "base", // sm | base | lg | xl
+    textSize: "base",
     highContrast: false,
     reduceMotion: false,
   });
 
-  /* Accessibility detection + keyboard shortcuts */
+  /* ------------------ Effects ------------------ */
+
+  // Respect OS motion preference + keyboard shortcuts
   useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reduce.matches) setPrefs(p => ({ ...p, reduceMotion: true }));
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setPrefs(p => ({ ...p, reduceMotion: true }));
+    }
 
     const onKey = e => {
       if (e.altKey && e.key.toLowerCase() === "p") setShowPrefs(true);
       if (e.key === "Escape") setShowPrefs(false);
     };
+
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  /* ------------------ Helpers ------------------ */
+
   const motionProps = prefs.reduceMotion
     ? { initial: false, animate: false, exit: false }
-    : { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0 } };
+    : {
+        initial: { opacity: 0, y: 10 },
+        animate: { opacity: 1, y: 0 },
+        exit: { opacity: 0 },
+      };
 
-  const textSizeClass = {
-    sm: "text-sm",
-    base: "text-base",
-    lg: "text-lg",
-    xl: "text-xl",
-  }[prefs.textSize];
+  const textSizeClass = TEXT_SIZES[prefs.textSize];
 
-  /* Validation */
-  const next = () => {
+  const goNext = () => {
     if (!issue) {
       setError("Select one option to continue. You can’t do this wrong.");
       return;
@@ -63,22 +81,31 @@ export default function App() {
     setStep(2);
   };
 
-  const submit = () => setSubmitted(true);
+  const reset = () => {
+    setStep(1);
+    setIssue("");
+    setContext("");
+    setSubmitted(false);
+  };
 
-  /* Success screen */
+  /* ------------------ Success Screen ------------------ */
+
   if (submitted) {
     return (
       <main className="min-h-screen flex items-center justify-center p-6 bg-white">
         <motion.div {...motionProps} className="max-w-md w-full text-center">
           <CheckCircle className="mx-auto h-16 w-16 text-green-600" aria-hidden />
           <h1 className="text-2xl font-bold mt-4">Report submitted</h1>
+
           <p className="mt-3 text-gray-700">
-            This report does not block deployment automatically. It helps the team review data safely.
+            This report does not automatically block deployment.
+            It helps reviewers evaluate data safely.
           </p>
 
           <div className="mt-4 text-left border rounded-lg p-4">
             <strong>Issue flagged:</strong>
             <div>{issue}</div>
+
             {context && (
               <div className="mt-2">
                 <strong>Context:</strong>
@@ -94,14 +121,10 @@ export default function App() {
             >
               Edit report
             </button>
+
             <button
               className="w-full rounded-lg border py-3 text-lg"
-              onClick={() => {
-                setStep(1);
-                setIssue("");
-                setContext("");
-                setSubmitted(false);
-              }}
+              onClick={reset}
             >
               Submit another report
             </button>
@@ -111,24 +134,32 @@ export default function App() {
     );
   }
 
+  /* ------------------ Main Flow ------------------ */
+
   return (
     <main
-      className={`min-h-screen p-6 ${prefs.highContrast ? "bg-black text-white" : "bg-white"} ${textSizeClass}`}
+      className={`min-h-screen p-6 ${
+        prefs.highContrast ? "bg-black text-white" : "bg-white"
+      } ${textSizeClass}`}
     >
       <div className="max-w-xl mx-auto">
         {/* Utility bar */}
         <div className="flex items-center justify-between mb-4">
-          <div className="text-sm" aria-live="polite">Step {step} of 2</div>
+          <div className="text-sm" aria-live="polite">
+            Step {step} of 2
+          </div>
+
           <button
             aria-label="Accessibility preferences (Alt+P)"
             onClick={() => setShowPrefs(true)}
             className="flex items-center gap-2 text-sm"
           >
-            <Accessibility className="h-4 w-4" /> Preferences
+            <Accessibility className="h-4 w-4" />
+            Preferences
           </button>
         </div>
 
-        {/* Progress bar */}
+        {/* Progress */}
         <div className="h-2 bg-gray-200 rounded mb-6" aria-hidden>
           <div
             className="h-2 bg-blue-700 rounded"
@@ -139,35 +170,46 @@ export default function App() {
         <AnimatePresence mode="wait">
           {step === 1 && (
             <motion.section key="step1" {...motionProps}>
-              <h1 className="text-2xl font-bold mb-4">What kind of issue are you reporting?</h1>
+              <h1 className="text-2xl font-bold mb-4">
+                What kind of issue are you reporting?
+              </h1>
 
               {error && (
-                <div role="alert" className="mb-3 flex gap-2 border border-red-500 bg-red-50 p-3 rounded">
+                <div
+                  role="alert"
+                  className="mb-3 flex gap-2 border border-red-500 bg-red-50 p-3 rounded"
+                >
                   <AlertTriangle className="h-5 w-5 text-red-600" />
                   <span>{error}</span>
                 </div>
               )}
 
-              <fieldset role="radiogroup" aria-label="Issue type" className="space-y-3">
-                {ISSUES.map(opt => (
+              <fieldset
+                role="radiogroup"
+                aria-label="Issue type"
+                className="space-y-3"
+              >
+                {ISSUES.map(option => (
                   <label
-                    key={opt}
+                    key={option}
                     className="flex items-center gap-3 border rounded-lg p-4 cursor-pointer focus-within:ring-4 ring-blue-300"
                   >
                     <input
                       type="radio"
                       name="issue"
-                      value={opt}
-                      checked={issue === opt}
-                      onChange={() => setIssue(opt)}
+                      checked={issue === option}
+                      onChange={() => setIssue(option)}
                       className="h-5 w-5"
                     />
-                    <span>{opt}</span>
+                    <span>{option}</span>
                   </label>
                 ))}
               </fieldset>
 
-              <button className="mt-6 w-full rounded-lg bg-blue-700 text-white py-3 text-lg" onClick={next}>
+              <button
+                className="mt-6 w-full rounded-lg bg-blue-700 text-white py-3 text-lg"
+                onClick={goNext}
+              >
                 Continue →
               </button>
             </motion.section>
@@ -175,15 +217,22 @@ export default function App() {
 
           {step === 2 && (
             <motion.section key="step2" {...motionProps}>
-              <h1 className="text-2xl font-bold mb-4">You’re flagging a potential data risk</h1>
+              <h1 className="text-2xl font-bold mb-4">
+                You’re flagging a potential data risk
+              </h1>
 
               <div className="border rounded-lg p-4 mb-4">
                 <strong>Issue type:</strong>
                 <div>{issue}</div>
-                <div className="text-sm text-gray-600">You can change this later.</div>
+                <div className="text-sm text-gray-600">
+                  You can change this later.
+                </div>
               </div>
 
-              <label className="block mb-2" htmlFor="context">Add context (optional)</label>
+              <label htmlFor="context" className="block mb-2">
+                Add context (optional)
+              </label>
+
               <textarea
                 id="context"
                 className="w-full border rounded-lg p-3 min-h-[96px]"
@@ -197,10 +246,17 @@ export default function App() {
               </p>
 
               <div className="mt-6 flex gap-3">
-                <button className="flex-1 rounded-lg border py-3" onClick={() => setStep(1)}>
+                <button
+                  className="flex-1 rounded-lg border py-3"
+                  onClick={() => setStep(1)}
+                >
                   Back
                 </button>
-                <button className="flex-1 rounded-lg bg-blue-700 text-white py-3" onClick={submit}>
+
+                <button
+                  className="flex-1 rounded-lg bg-blue-700 text-white py-3"
+                  onClick={() => setSubmitted(true)}
+                >
                   Submit report
                 </button>
               </div>
@@ -211,16 +267,24 @@ export default function App() {
 
       {/* Accessibility Preferences */}
       {showPrefs && (
-        <div role="dialog" aria-modal="true" className="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center p-4"
+        >
           <div className="bg-white max-w-sm w-full rounded-lg p-4">
-            <h2 className="text-lg font-bold mb-3">Accessibility preferences</h2>
+            <h2 className="text-lg font-bold mb-3">
+              Accessibility preferences
+            </h2>
 
             <label className="block mb-2">
               Text size
               <select
                 className="mt-1 w-full border rounded p-2"
                 value={prefs.textSize}
-                onChange={e => setPrefs(p => ({ ...p, textSize: e.target.value }))}
+                onChange={e =>
+                  setPrefs(p => ({ ...p, textSize: e.target.value }))
+                }
               >
                 <option value="sm">Small</option>
                 <option value="base">Medium</option>
@@ -230,21 +294,16 @@ export default function App() {
             </label>
 
             <label className="flex items-center gap-2 mb-2">
-              <input type="checkbox" checked={prefs.highContrast} onChange={e => setPrefs(p => ({ ...p, highContrast: e.target.checked }))} />
+              <input
+                type="checkbox"
+                checked={prefs.highContrast}
+                onChange={e =>
+                  setPrefs(p => ({ ...p, highContrast: e.target.checked }))
+                }
+              />
               High contrast
             </label>
 
             <label className="flex items-center gap-2">
-              <input type="checkbox" checked={prefs.reduceMotion} onChange={e => setPrefs(p => ({ ...p, reduceMotion: e.target.checked }))} />
-              Reduce motion
-            </label>
-
-            <button className="mt-4 w-full rounded-lg bg-blue-700 text-white py-2" onClick={() => setShowPrefs(false)}>
-              Done
-            </button>
-          </div>
-        </div>
-      )}
-    </main>
-  );
-}
+              <input
+                type="checkbox"
