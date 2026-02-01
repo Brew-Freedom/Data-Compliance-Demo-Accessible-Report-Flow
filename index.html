@@ -1,129 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="light dark" />
+<h1>What kind of issue are you reporting?</h1>
 
-  <title>AI Training Data Compliance – Report an Issue</title>
-  <meta name="description" content="Accessible, low-cognitive-load reporting flow for AI training data risks." />
+<div class="options">
+  <label class="option">
+    <input type="radio" name="issue" value="Licensing unclear">
+    Licensing or usage rights unclear
+  </label>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: #fff;
-      color: #111;
-    }
-    main {
-      max-width: 720px;
-      margin: auto;
-      padding: 2rem 1rem;
-    }
-    h1 {
-      font-size: 1.5rem;
-    }
-    .option {
-      border: 2px solid #ddd;
-      border-radius: 12px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      cursor: pointer;
-    }
-    .option input {
-      margin-right: 0.75rem;
-    }
-    button {
-      width: 100%;
-      padding: 0.75rem;
-      font-size: 1rem;
-      border-radius: 10px;
-      border: none;
-      background: #1d4ed8;
-      color: white;
-      cursor: pointer;
-    }
-    button:focus {
-      outline: 3px solid #93c5fd;
-    }
-    .hidden {
-      display: none;
-    }
-  </style>
-</head>
+  <label class="option">
+    <input type="radio" name="issue" value="Sensitive data">
+    Contains personal or sensitive data
+  </label>
 
-<body>
-<main>
-  <section id="step1">
-    <h1>What kind of issue are you reporting?</h1>
+  <label class="option">
+    <input type="radio" name="issue" value="Unverified source">
+    Source cannot be verified
+  </label>
 
-    <label class="option">
-      <input type="radio" name="issue" value="Licensing unclear">
-      Licensing or usage rights unclear
-    </label>
+  <label class="option">
+    <input type="radio" name="issue" value="Restricted material">
+    Restricted or copyrighted material
+  </label>
 
-    <label class="option">
-      <input type="radio" name="issue" value="Sensitive data">
-      Contains personal or sensitive data
-    </label>
-
-    <label class="option">
-      <input type="radio" name="issue" value="Unverified source">
-      Source cannot be verified
-    </label>
-
-    <label class="option">
-      <input type="radio" name="issue" value="Restricted material">
-      Restricted or copyrighted material
-    </label>
-
-    <label class="option">
-      <input type="radio" name="issue" value="Not sure">
-      Not sure — I just want to flag it
-    </label>
-
-    <button onclick="goNext()">Continue →</button>
-  </section>
-
-  <section id="step2" class="hidden">
-    <h1>You’re flagging a potential data risk</h1>
-    <p><strong>Issue:</strong> <span id="summary"></span></p>
-
-    <label>
-      Add context (optional)
-      <textarea rows="4" style="width:100%;margin-top:0.5rem;"></textarea>
-    </label>
-
-    <p style="font-size:0.9rem;color:#555;">
-      Submitting a report does not automatically block deployment.
-    </p>
-
-    <button onclick="submitReport()">Submit report</button>
-  </section>
-
-  <section id="success" class="hidden">
-    <h1>Report submitted</h1>
-    <p>This report helps the team review data safely.</p>
-  </section>
-</main>
-
-<script>
-  let selected = "";
-
-  function goNext() {
-    const choice = document.querySelector("input[name='issue']:checked");
-    if (!choice) return alert("Please select an option.");
-    selected = choice.value;
-    document.getElementById("summary").textContent = selected;
-    document.getElementById("step1").classList.add("hidden");
-    document.getElementById("step2").classList.remove("hidden");
-  }
-
-  function submitReport() {
-    document.getElementById("step2").classList.add("hidden");
-    document.getElementById("success").classList.remove("hidden");
-  }
-</script>
-</body>
-</html>
+  <label class="option">
+    <input type="radio" name="issue" value="Not sure">
+    Not sure — I just want to flag it
+  </label>
+</div>
