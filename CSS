@@ -1,3 +1,32 @@
-body {
-  background: red !important;
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  padding: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.option:hover {
+  border-color: #2563eb;
+  background: #f8fafc;
+}
+
+.option input {
+  flex-shrink: 0;
+}
+
+.option span {
+  font-size: 1rem;
+  line-height: 1.4;
 }
