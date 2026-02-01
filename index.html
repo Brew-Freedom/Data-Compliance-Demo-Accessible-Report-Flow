@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Training Compliance Checker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="card">
+  <h1>Training Compliance Checker</h1>
+  <p>Upload a CSV file to identify incomplete trainings</p>
+
+  <input type="file" id="csvFile" accept=".csv" />
+  <button onclick="processCSV()">Upload & Process</button>
+
+  <h3>Required CSV Columns:</h3>
+  <ul>
+    <li>Employee Name</li>
+    <li>Unit</li>
+    <li>Training Name</li>
+    <li>Completion Status</li>
+  </ul>
+
+  <pre id="output"></pre>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
