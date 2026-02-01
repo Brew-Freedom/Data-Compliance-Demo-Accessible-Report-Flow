@@ -1,100 +1,95 @@
-AI Training Data Compliance – Accessible Reporting Demo
+# AI Training Data Compliance — Accessible Reporting Demo
 
-An accessible, low-cognitive-load reporting flow for flagging potential AI training data compliance risks — built as a static GitHub Pages demo to emphasize UX clarity, accessibility, and product thinking over tooling complexity.
+An accessible, low-cognitive-load reporting flow for flagging potential AI training data compliance risks.
 
-✨ What This Is
+This project is a **static GitHub Pages demo** that emphasizes UX clarity, accessibility, and product thinking over backend complexity.
 
-This project demonstrates how AI teams can:
+🔗 **Live Demo:**  
+https://brew-freedom.github.io/Data-Compliance-Demo-Accessible-Report-Flow/
 
-Flag potential data compliance risks early
+---
 
-Lower the barrier for reporting uncertainty
+## ✨ What This Is
 
-Avoid false certainty while still enabling oversight
+This demo shows how AI teams can enable **early, low-friction reporting** of potential training data risks — even when users are unsure or lack legal expertise.
 
-Design compliance tools that are usable by non-experts
+It is intentionally designed for:
+- Non-experts
+- High-uncertainty environments
+- Internal tooling contexts
 
-The demo intentionally focuses on decision clarity and accessibility, not backend enforcement or automation.
+The goal is not enforcement — it’s **visibility, signal, and accountability**.
 
-🎯 Why Static HTML?
+---
 
-This demo is built with plain HTML, CSS, and minimal JavaScript — no frameworks, no build tools.
+## 🧭 The User Flow
 
-Why this matters:
+**Step 1: Identify the Concern**
+- Users choose from clearly worded issue types
+- Each option is presented as a large, selectable card
+- No legal language or forced certainty
 
-Works instantly on GitHub Pages
+**Step 2: Add Context (Optional)**
+- Users can provide additional detail without pressure
+- Reinforces that reporting ≠ blocking deployment
 
-Zero setup required to review
+**Completion**
+- The flow confirms submission and reinforces trust
+- No punitive or alarming messaging
 
-Keeps focus on UX, accessibility, and flow
+This mirrors how real compliance concerns arise: gradually, ambiguously, and often without full information.
 
-Mirrors real-world internal tooling constraints
+---
 
-This is a product and UX demonstration — not a production compliance system.
+## ♿ Accessibility & UX Principles
 
-🧭 Demo Flow
+This demo intentionally applies:
 
-User selects the type of data concern:
+- **Low cognitive load**
+  - One decision per screen
+  - Plain-language choices
+- **Accessible interaction**
+  - Full-card click targets
+  - Keyboard- and screen-reader-friendly structure
+- **Visual hierarchy**
+  - Centered card layout
+  - Clear progress indicator
+- **Psychological safety**
+  - “Not sure” is a first-class option
+  - Reporting does not imply wrongdoing
 
-Licensing uncertainty
+---
 
-Sensitive or personal data
+## 🎯 Why Static HTML?
 
-Unverified sources
+This demo uses only HTML, CSS, and minimal JavaScript to keep the focus on:
 
-Restricted or copyrighted material
+- Interaction design
+- Accessibility
+- Decision clarity
 
-“Not sure” (intentional ambiguity support)
+There is no backend, storage, or enforcement logic by design.
 
-User optionally adds context
+In a real system, submissions could route to:
+- Compliance review queues
+- Audit logs
+- Model governance workflows
 
-Report is submitted without blocking deployment
+---
 
-Risk is surfaced for later review
+## 🚧 What This Is Not
 
-This reflects real compliance workflows, where flagging ≠ automatic rejection.
+- Not a full compliance system
+- Not legal advice
+- Not automated enforcement
 
-♿ Accessibility Principles
+This is a **product and UX prototype** demonstrating how better design can reduce risk earlier in the AI lifecycle.
 
-The demo prioritizes:
+---
 
-Keyboard navigation
+## 🧠 Who This Is For
 
-Large tap targets
-
-Plain language
-
-Minimal choices per screen
-
-Clear system feedback
-
-Low visual and cognitive load
-
-Designed for:
-
-Engineers
-
-Legal reviewers
-
-Analysts
-
-Non-technical contributors
-
-🧠 Product Thinking Highlight
-
-Key design decisions:
-
-“Not sure” is a valid option → reduces underreporting
-
-No scary warnings → encourages honest reporting
-
-Optional context → avoids forcing narrative
-
-Clear reassurance → reporting doesn’t halt progress
-
-🚀 Live Demo
-
-👉 GitHub Pages Demo:
-(Enable via Repo → Settings → Pages → main / root)
-
-Once enabled, the demo runs automatically from index.html.
+- AI platform teams
+- Responsible AI / governance leads
+- Product managers designing internal tools
+- UX designers working on compliance or safety flows
