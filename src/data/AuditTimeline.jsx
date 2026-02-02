@@ -1,3 +1,4 @@
+// Demo component – simulated data
 import { useState } from "react";
 import CsvPreview from "./CsvPreview";
 
