@@ -107,3 +107,11 @@ button:hover {
   border-radius: 999px;
   margin-left: auto;
 }
+.new-dot {
+  width: 8px;
+  height: 8px;
+  background: #2563eb;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 6px;
+}
