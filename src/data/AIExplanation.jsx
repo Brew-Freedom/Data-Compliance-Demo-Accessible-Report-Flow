@@ -1,3 +1,4 @@
+// Demo component – simulated data
 export default function AIExplanation({ row }) {
   return (
     <div className="ai-box">
