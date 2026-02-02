@@ -1,3 +1,4 @@
+// Demo component – simulated data
 function SidebarItem({ label, active, badge }) {
   return (
     <div className={`sidebar-item ${active ? "active" : ""}`}>
