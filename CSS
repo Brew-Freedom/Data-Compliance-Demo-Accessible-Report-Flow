@@ -99,3 +99,11 @@ button:hover {
 .hidden {
   display: none;
 }
+.badge-red {
+  background: #dc2626;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 999px;
+  margin-left: auto;
+}
