@@ -4,65 +4,34 @@ export const auditEvents = [
     timestamp: "2026-02-01T14:10:00",
     title: "Potential sensitive data reported",
     dataset: "customer_uploads_q3.xlsx",
-    row: 417,
-    reason: "Personal or sensitive information",
-    actor: "Internal user",
-    status: "awaiting_review",
-
-    aiExplanation: {
-      summary:
-        "This data was flagged because it may include personal information that should not be used for AI training without review.",
-      whyItMatters:
-        "Using personal or sensitive data without proper handling can create legal and privacy risks.",
-      whatHappensNext:
-        "A compliance reviewer will examine the data. If needed, it will be escalated to legal for guidance before any model uses it."
-    },
-
-    steps: [
-      {
-        time: "2026-02-01T14:10:00",
-        description: "A user flagged a potential data concern."
-      },
-      {
-        time: "2026-02-01T15:05:00",
-        description: "Compliance team began reviewing the report."
-      }
-    ]
-  }
-];
-export const auditEvents = [
-  {
-    id: 1,
-    timestamp: "2026-02-01T14:10:00",
-    title: "Potential sensitive data reported",
-    dataset: "customer_uploads_q3.xlsx",
-    row: 417,
-    status: "awaiting_review",
 
     simulatedLLMReasoning: [
       {
         step: 1,
-        label: "Identify the concern",
-        text:
-          "The user selected 'Personal or sensitive data', which signals a possible privacy or regulatory issue."
+        confidence: "High",
+        policyRef: "Privacy Policy §3.2",
+        execText:
+          "This dataset may include customer information that requires review.",
+        legalText:
+          "User-selected classification indicates potential personal data under GDPR/CCPA definitions."
       },
       {
         step: 2,
-        label: "Assess risk level",
-        text:
-          "Data from customer uploads often contains names, emails, or identifiers. These require extra review before AI training."
+        confidence: "Medium",
+        policyRef: "Data Handling Standard §4.1",
+        execText:
+          "Customer uploads are higher risk and need extra checks.",
+        legalText:
+          "Unstructured customer-provided datasets frequently contain identifiers or quasi-identifiers."
       },
       {
         step: 3,
-        label: "Apply policy rules",
-        text:
-          "Company policy requires human review when personal data may be involved. Automated approval is not allowed."
-      },
-      {
-        step: 4,
-        label: "Determine next action",
-        text:
-          "The issue was routed to the compliance queue so a reviewer can confirm whether the data is allowed, needs redaction, or must be removed."
+        confidence: "High",
+        policyRef: "AI Training Policy §2.5",
+        execText:
+          "Company rules require a human to review this before use.",
+        legalText:
+          "Automated approval is prohibited when personal data risk is present."
       }
     ]
   }
