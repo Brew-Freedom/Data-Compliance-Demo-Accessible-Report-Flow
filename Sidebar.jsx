@@ -10,3 +10,4 @@ function SidebarItem({ label, active, badge }) {
   label="Legal Review Queue"
   badge="2"
 />
+<span className="new-dot" aria-label="New item"></span>
