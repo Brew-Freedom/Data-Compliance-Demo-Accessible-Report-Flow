@@ -6,3 +6,7 @@ function SidebarItem({ label, active, badge }) {
     </div>
   );
 }
+<SidebarItem
+  label="Legal Review Queue"
+  badge="2"
+/>
