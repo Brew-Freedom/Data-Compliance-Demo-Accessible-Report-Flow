@@ -93,3 +93,17 @@ This is a **product and UX prototype** demonstrating how better design can reduc
 - Responsible AI / governance leads
 - Product managers designing internal tools
 - UX designers working on compliance or safety flows
+## UX Compliance Demo
+
+This project demonstrates a dataset compliance review flow using reusable UI
+components, a review modal, and progressive disclosure.
+
+### Key UX Goals
+- Reduce friction in compliance decisions
+- Make licensing requirements actionable
+- Support ML + Legal stakeholders
+
+### Features
+- Dataset review modal
+- Compliance checklist gating approval
+- Clear status indicators
